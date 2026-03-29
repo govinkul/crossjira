@@ -1,0 +1,46 @@
+name: Weekly Jira To Confluence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  update-confluence:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+      JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+      MIGGBO_BASE_URL: https://miggbo.atlassian.net
+      SEDONA_BASE_URL: https://sedona.atlassian.net
+      CONFLUENCE_BASE_URL: https://miggbo.atlassian.net
+      CONFLUENCE_PAGE_ID: "1951531028"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate required secrets
+        run: |
+          test -n "${JIRA_EMAIL}"
+          test -n "${JIRA_API_TOKEN}"
+
+      - name: Preview update
+        run: python jira/bin/run_weekly_jira_to_confluence.py
+
+      - name: Apply update
+        run: python jira/bin/run_weekly_jira_to_confluence.py --apply --force-version
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-jira-to-confluence-output
+          path: output/weekly_jira_to_confluence/
+          if-no-files-found: ignore

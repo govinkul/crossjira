@@ -1,0 +1,7 @@
+interface:
+  display_name: "Jira"
+  short_description: "Work with Jira issues and workflows"
+  default_prompt: "Use $jira to find, create, update, or transition Jira issues, summarize the results, or run the assignee follow-up flow for open labeled issues."
+
+policy:
+  allow_implicit_invocation: true
