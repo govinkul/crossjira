@@ -11,8 +11,8 @@ jobs:
     permissions:
       contents: read
     env:
-      JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-      JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+      JIRA_EMAIL: ${{ secrets.ATLASSIAN_EMAIL }}
+      JIRA_API_TOKEN: ${{ secrets.ATLASSIAN_API_TOKEN }}
       MIGGBO_BASE_URL: https://miggbo.atlassian.net
       SEDONA_BASE_URL: https://sedona.atlassian.net
       CONFLUENCE_BASE_URL: https://miggbo.atlassian.net
