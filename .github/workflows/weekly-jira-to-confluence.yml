@@ -3,7 +3,7 @@ name: Weekly Jira To Confluence
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 23 * * *"
+    - cron: "0 18 * * *"
 
 jobs:
   update-confluence:
@@ -26,11 +26,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Debug secret presence
-        run: |
-          echo "HAS_ATLASSIAN_EMAIL=${{ secrets.ATLASSIAN_EMAIL != '' }}"
-          echo "HAS_ATLASSIAN_API_TOKEN=${{ secrets.ATLASSIAN_API_TOKEN != '' }}"
 
       - name: Validate required secrets
         run: |
